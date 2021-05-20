@@ -4,13 +4,13 @@
 
 Language identification based on fasttext (lid.176.ftz https://fasttext.cc/docs/en/language-identification.html).
 
-The lid.176.ftz is licensed under CC-BY-SA and is not part of this module. It is automatically downloaded from its external origin on the first run of this module.
+The `lid.176.ftz` file is licensed under  Creative Commons Attribution-Share-Alike License 3.0 and is not part of this module. It is automatically downloaded from its external origin on the first run of this module.
 
 This module attempts to immitate the follow two features of `langid`
-*   fastlid.classify
-*   fastlid.set_languages
+*   langid.classify: fastlid
+*   langid.classify(langs=[...]): fastlid.set_languages = [...]
     *   import fastlid
-    *   fastlid.set_languages(langs=['nl','fr'])
+    *   fastlid.set_languages = ['nl','fr'])
 *   TODO: Commandline interface
 
 ## Install it
@@ -25,7 +25,19 @@ or clone the git repo and install from source.
 
 ## Use it
 ```python
-from fastlid import fastlid
+from fastlid import fastlid, supported_langs
+
+# support 176 languages
+print(supported_langs, len(supported_langs))
+# ['af', 'als', 'am', 'an', 'ar', 'arz', 'as', 'ast', 'av', 'az'] 176
+
+fastlid("test this")
+# ('en', 0.765)
+
+fastlid("test this 测试一下", k=2)
+# (['zh', 'en'], [0.663, 0.124])
+
+
 ```
 
 ## For Developers
