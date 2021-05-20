@@ -1,4 +1,4 @@
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 from .supported_langs import supported_langs
 from .fastlid import fastlid

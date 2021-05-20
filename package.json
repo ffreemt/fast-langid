@@ -1,6 +1,6 @@
 {
     "name": "fastlid",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "detect language via fasttext",
     "main": "index.js",
     "license": "MIT",
