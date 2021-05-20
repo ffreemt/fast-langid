@@ -1,0 +1,21 @@
+{
+    "name": "fastlid",
+    "version": "1.0.0",
+    "description": "detect language via fasttext",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+        "dev:1": "nodemon -w fastlid -x python -m fastlid 1 test",
+        "dev:2": "nodemon -w fastlid -x python -m fastlid 2 test",
+        "dev:22:comment": " k=2 set_langues=[\"en\", \"de\"] ",
+        "dev:22": "nodemon -w fastlid -x python -m fastlid 22 test",
+        "format": "nodemon -w tests -w fatlid -e .py -x black",
+        "style": "nodemon -w tests -w fatlid -e .py -x flake8",
+        "lint": "nodemon -w tests -w fatlid -e .py -x pylint",
+        "test": "nodemon -w tests -w fatlid -e .py -x pytest",
+        "black": "black tests fastlid",
+        "flake8": "flake8",
+        "pytest": "pytest",
+        "final": "run-s black flake8 pytest"
+    }
+}
