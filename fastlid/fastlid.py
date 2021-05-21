@@ -2,6 +2,7 @@
 from typing import Any, Callable, List, Tuple, Union
 
 from pathlib import Path
+import re
 import urllib.request
 import hashlib
 import numpy as np
@@ -15,7 +16,11 @@ logzero.setup_logger(level=20)
 
 logger.info(__file__)
 _ = Path(__file__).parent
+MODEL_FILE = "lid.176.bin"
 MODEL_FILE = "lid.176.ftz"
+
+# https://dl.fbaipublicfiles.com/fasttext/supervised-models/lid.176.bin
+
 MODEL_PATH = Path(_) / MODEL_FILE
 
 # check MODEL_PATH exist and md5 is correct
@@ -112,18 +117,20 @@ def fastlid(
     except Exception as e:
         logger.error("Cant convert to text: %s", e)
         raise SystemExit(1) from e
+    try:
+        # insert some spaces in Chinese text
+        text = re.sub(r'[一-龙]', r' \g<0> ', text)
+    except Exception as e:
+        logger.error("re.sub error: %s, we proceed nevertheless", e)
 
-    # verify fastlid.set_languages
-
-    # logger.debug("fastlid.set_languages: %s, is list: %s", fastlid.set_languages, isinstance(fastlid.set_languages, list))
-
+    # verify fastlid.set_languages is a list
     if fastlid.set_languages is not None:
         if not isinstance(fastlid.set_languages, list):
             logger.error("fastlid.set_languages is not a list")
             logger.info("Setting to None")
             fastlid.set_languages = None
 
-    logger.debug("fastlid.set_languages: %s", fastlid.set_languages)
+        logger.debug("fastlid.set_languages: %s", fastlid.set_languages)
 
     if not fastlid.set_languages:  # None or empty
         res = MODEL.predict(text, k=k, threshold=threshold)
@@ -140,15 +147,15 @@ def fastlid(
 
         # return ["en"], [1]
 
-    # #### fastlid.set_languages it not None  ####
+    # #### fastlid.set_languages is not None  ####
     # make sure set_languages is valid in supported_langs
     logger.info("set_languages: %s", fastlid.set_languages)
 
-    # strip spaces
+    # strip spaces, conver to lower case
     try:
-        fastlid.set_languages = [elm.strip() for elm in fastlid.set_languages if elm.strip()]
+        fastlid.set_languages = [elm.strip().lower() for elm in fastlid.set_languages if elm.strip()]
     except Exception as e:
-        logger.error(e)
+        logger.error("fastlid.set_languages ill-formed: %s", e)
         raise SystemExit(1) from e
 
     valid = True
