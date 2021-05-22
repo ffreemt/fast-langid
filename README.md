@@ -8,7 +8,7 @@ The `lid.176.ftz` file is licensed under  Creative Commons Attribution-Share-Ali
 
 This module attempts to immitate the follow two features of `langid`
 *   langid.classify: fastlid
-*   langid.classify(langs=[...]): fastlid.set_languages = [...]
+*   langid.set_languages(langs=[...]): fastlid.set_languages = [...]
     *   import fastlid
     *   fastlid.set_languages = ['nl','fr'])
 *   TODO: Commandline interface
@@ -36,9 +36,9 @@ fastlid("test this")
 
 fastlid("test this 测试一下", k=2)
 # (['zh', 'en'], [0.663, 0.124])
-
-
 ```
+
+N.B. `hanzidentifier` can be used to identify simplified Chinese or/and traditional Chinese should you need to do so.
 
 ## For Developers
 Install `poetry` and `yarn` the way you like it.

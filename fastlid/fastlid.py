@@ -12,9 +12,12 @@ from logzero import logger
 
 from fastlid import supported_langs
 
-logzero.setup_logger(level=20)
+# patch warning from fasttext
+fasttext.FastText.eprint = lambda x: None
 
-logger.info(__file__)
+logzero.setup_default_logger(level=20)
+
+# logger.info(__file__)
 _ = Path(__file__).parent
 MODEL_FILE = "lid.176.bin"
 MODEL_FILE = "lid.176.ftz"
@@ -70,6 +73,7 @@ def fastlid(
         text: str,
         k: int = 1,
         threshold: float = 0.0,
+        loglevel: int = 20,
 ) -> Union[Tuple[str, float], Tuple[List[str], List[float]]]:
     # fmt: on
     """Detect lang via a fasttext model.
@@ -110,6 +114,15 @@ def fastlid(
         for k=1: (label, probabilty)
         for k>1: ([label1, ..., labelk], [prob1, ..., probk]
     """
+    try:
+        loglevel = int(loglevel)
+    except Exception as e:
+        logger.error(e)
+        loglevel = 20
+    if loglevel < 10:
+        loglevel = 10
+    logzero.setup_default_logger(level=loglevel)
+
     # logger.debug("fastlid entry")
 
     try:
@@ -119,9 +132,12 @@ def fastlid(
         raise SystemExit(1) from e
     try:
         # insert some spaces in Chinese text
-        text = re.sub(r'[一-龙]', r' \g<0> ', text)
+        text = re.sub(r"[一-龙]", r" \g<0> ", text)
     except Exception as e:
         logger.error("re.sub error: %s, we proceed nevertheless", e)
+
+    # \n seems to cause problems
+    text = text.replace("\n", " ")
 
     # verify fastlid.set_languages is a list
     if fastlid.set_languages is not None:
@@ -133,7 +149,12 @@ def fastlid(
         logger.debug("fastlid.set_languages: %s", fastlid.set_languages)
 
     if not fastlid.set_languages:  # None or empty
-        res = MODEL.predict(text, k=k, threshold=threshold)
+        try:
+            res = MODEL.predict(text, k=k, threshold=threshold)
+        except Exception as e:
+            logger.error("MODEL.predict error: %s", e)
+            raise
+
         try:
             lid, prob = list(res[0]), res[1].tolist()
         except Exception as e:
@@ -149,7 +170,7 @@ def fastlid(
 
     # #### fastlid.set_languages is not None  ####
     # make sure set_languages is valid in supported_langs
-    logger.info("set_languages: %s", fastlid.set_languages)
+    logger.debug("set_languages: %s", fastlid.set_languages)
 
     # strip spaces, conver to lower case
     try:
@@ -172,7 +193,11 @@ def fastlid(
         logger.info("We'll just disgard those and proceed")
 
     # fetch all possible langs
-    ires = MODEL.predict(text, -1, threshold=threshold)  # k=-1
+    try:
+        ires = MODEL.predict(text, -1, threshold=threshold)  # k=-1
+    except Exception as e:
+        logger.error("MODEL.predict error: %s", e)
+        raise
 
     # logger.debug("ires, %s, %s", ires[0], ires[1])
 
