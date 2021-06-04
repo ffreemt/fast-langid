@@ -4,7 +4,7 @@ from fastlid import fastlid
 import logzero
 from logzero import logger
 
-logzero.setup_logger(level=20)
+logzero.setup_default_logger(level=20)
 
 
 def main(text, k=1):
