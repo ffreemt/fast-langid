@@ -13,9 +13,10 @@
         "style": "nodemon -w tests -w fatlid -e .py -x flake8",
         "lint": "nodemon -w tests -w fatlid -e .py -x pylint",
         "test": "nodemon -w tests -w fatlid -e .py -x pytest",
+        "pyright": "pyright tests fastlid",
         "black": "black tests fastlid",
         "flake8": "flake8",
         "pytest": "pytest",
-        "final": "run-s black flake8 pytest"
+        "final": "run-s pyright black flake8 pytest"
     }
 }

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastlid"
-version = "0.1.4"
+version = "0.1.5"
 description = "Detect languages via a fasttext model"
 authors = ["freemt"]
 license = "MIT"

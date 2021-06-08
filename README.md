@@ -20,6 +20,8 @@ pip install fastlid
 or install from `git`
 ```bash
 pip install git+https://github.com/ffreemt/fast-langid.git
+
+# also works pip install git+https://github.com/ffreemt/fast-langid
 ```
 or clone the git repo and install from source.
 

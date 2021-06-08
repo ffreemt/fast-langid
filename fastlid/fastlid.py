@@ -132,7 +132,11 @@ def fastlid(
         raise SystemExit(1) from e
     try:
         # insert some spaces in Chinese text
-        text = re.sub(r"[一-龙]", r" \g<0> ", text)
+        # text = re.sub(r"[一-龟]", r" \g<0> ", text)
+        text = re.sub("(?<=[a-zA-Z]) (?=[a-zA-Z])", "", text.replace("", " "))
+
+        # faster, but cant be used here
+        # text = text.replace("", " ")
     except Exception as e:
         logger.error("re.sub error: %s, we proceed nevertheless", e)
 
