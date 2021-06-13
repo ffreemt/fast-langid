@@ -38,6 +38,18 @@ fastlid("test this")
 
 fastlid("test this 测试一下", k=2)
 # (['zh', 'en'], [0.663, 0.124])
+
+fastlid.set_languages = ['fr', 'zh']
+fastlid("test this 测试吧")
+# ('zh', 0.01)
+
+fastlid.set_languages = None
+fastlid("test this 测试吧")
+('en', 0.686)
+
+fastlid.set_languages = ['fr', 'zh', 'en']
+fastlid("test this 测试吧", k=3)
+(['en', 'zh', 'fr'], [0.686, 0.01, 0.006])
 ```
 
 N.B. `hanzidentifier` can be used to identify simplified Chinese or/and traditional Chinese should you need to do so.
@@ -45,9 +57,12 @@ N.B. `hanzidentifier` can be used to identify simplified Chinese or/and traditio
 ## For Developers
 Install `poetry` and `yarn` the way you like it.
 ```bash
-poetry install --dev
-yarn install --dev
+poetry install  # install python packages
+yarn install --dev  # install necesary node packages
 
+# ...code...
 yarn test
 yarn final
+
+# ...optionally submit pr...
 ```
