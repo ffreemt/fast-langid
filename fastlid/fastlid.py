@@ -133,7 +133,11 @@ def fastlid(
     try:
         # insert some spaces in Chinese text
         # text = re.sub(r"[一-龟]", r" \g<0> ", text)
-        text = re.sub("(?<=[a-zA-Z]) (?=[a-zA-Z])", "", text.replace("", " "))
+
+        # text = re.sub(r"(?<=[a-zA-Z]) (?=[a-zA-Z])", "", text.replace("", " "))
+
+        # faster?
+        text = re.sub(r"[一-龟]|\d+|\w+", r"\g<0> ", text)
 
         # faster, but cant be used here
         # text = text.replace("", " ")
