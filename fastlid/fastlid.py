@@ -136,9 +136,12 @@ def fastlid(
 
         # text = re.sub(r"(?<=[a-zA-Z]) (?=[a-zA-Z])", "", text.replace("", " "))
 
-        # faster?
+        # faster
         text = re.sub(r"[一-龟]|\d+|\w+", r"\g<0> ", text)
-
+        
+        # probably better, need to check speed
+        # text = re.sub(r"[一-龟]|[^一-龟]+", r"\g<0> ", text)
+        
         # faster, but cant be used here
         # text = text.replace("", " ")
     except Exception as e:
