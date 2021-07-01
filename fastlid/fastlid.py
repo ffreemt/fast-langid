@@ -74,9 +74,10 @@ def fastlid(
         k: int = 1,
         threshold: float = 0.0,
         loglevel: int = 20,
+        method: int = None,
 ) -> Union[Tuple[str, float], Tuple[List[str], List[float]]]:
     # fmt: on
-    """Detect lang via a fasttext model.
+    r"""Detect lang via a fasttext model.
         Given a string, get a list of labels and a list of
     corresponding probabilities. k controls the number
     of returned labels. A choice of 5, will return the 5
@@ -109,7 +110,9 @@ def fastlid(
         threshold: filters the returned labels by a
                 threshold on probability
                 fasttext.load_model().predict(..., threshold=0.0)
-
+        method: regarding how to insert spaces
+                None: default, using re.sub(r"(?<=[a-zA-Z]) (?=[a-zA-Z])", "", text.replace("", " "))
+                else: using re.sub(r"[一-龟]|\d+|\w+", r"\g<0> ", text)
     Returns:
         for k=1: (label, probabilty)
         for k>1: ([label1, ..., labelk], [prob1, ..., probk]
@@ -134,14 +137,16 @@ def fastlid(
         # insert some spaces in Chinese text
         # text = re.sub(r"[一-龟]", r" \g<0> ", text)
 
-        # text = re.sub(r"(?<=[a-zA-Z]) (?=[a-zA-Z])", "", text.replace("", " "))
+        if method is None:
+            text = re.sub(r"(?<=[a-zA-Z]) (?=[a-zA-Z])", "", text.replace("", " "))  # NOQA
+        else:
+            # faster? method 3 iin insert_spaces
+            text = re.sub(r"[一-龟]|\d+|\w+", r"\g<0> ", text)
 
-        # faster
-        text = re.sub(r"[一-龟]|\d+|\w+", r"\g<0> ", text)
-        
-        # probably better, need to check speed
+        # probably better, need to check speed,
+        # slow 30s to process shakespeare
         # text = re.sub(r"[一-龟]|[^一-龟]+", r"\g<0> ", text)
-        
+
         # faster, but cant be used here
         # text = text.replace("", " ")
     except Exception as e:
