@@ -57,7 +57,7 @@ except Exception as e:
 
 
 def with_func_attrs(**attrs: Any) -> Callable:
-    """ with_func_attrs """
+    """Define func_attrs."""
 
     def with_attrs(fct: Callable) -> Callable:
         for key, val in attrs.items():
@@ -78,6 +78,7 @@ def fastlid(
 ) -> Union[Tuple[str, float], Tuple[List[str], List[float]]]:
     # fmt: on
     r"""Detect lang via a fasttext model.
+
         Given a string, get a list of labels and a list of
     corresponding probabilities. k controls the number
     of returned labels. A choice of 5, will return the 5
@@ -137,10 +138,12 @@ def fastlid(
         # insert some spaces in Chinese text
         # text = re.sub(r"[一-龟]", r" \g<0> ", text)
 
+        # ispace = lambda text: re.sub(r"(?<=[a-zA-Z\d]) (?=[a-zA-Z\d])", "", text.replace("", " ")).strip()
+
         if method is None:
             text = re.sub(r"(?<=[a-zA-Z]) (?=[a-zA-Z])", "", text.replace("", " "))  # NOQA
         else:
-            # faster? method 3 iin insert_spaces
+            # faster? method 3 in insert_spaces
             text = re.sub(r"[一-龟]|\d+|\w+", r"\g<0> ", text)
 
         # probably better, need to check speed,

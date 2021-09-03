@@ -8,7 +8,7 @@ logzero.setup_default_logger(level=20)
 
 
 def main(text, k=1):
-    """Run main()"""
+    """Run main."""
     if k == 22:
         logger.info("Testing set_languages = ['en', 'de']")
         k = 2

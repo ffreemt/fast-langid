@@ -17,7 +17,14 @@ def test_fastlidk2():
 
 
 def test_de_en():
+    """Test de_en."""
     fastlid.set_languages = ["en", "de"]
 
     text = "test it and more what how can this be 中"
     assert fastlid(text, k=2) == (["en", "de"], [0.405, 0.001])
+
+
+def test_slashhelp():
+    """Test /help."""
+    text = "/help"
+    assert fastlid(text)[0] in ("en",)
