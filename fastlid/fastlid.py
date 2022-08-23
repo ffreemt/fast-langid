@@ -1,5 +1,7 @@
-"""Detect lang via a fasttext model."""
-from typing import Any, Callable, List, Tuple, Union
+"""Detect lang via a fasttext model.
+
+"""
+from typing import Any, Callable, List, Optional, Tuple, Union
 
 from pathlib import Path
 import re
@@ -15,7 +17,7 @@ from fastlid import supported_langs
 # patch warning from fasttext
 fasttext.FastText.eprint = lambda x: None
 
-logzero.setup_default_logger(level=20)
+# logzero.setup_default_logger(level=20)
 
 # logger.info(__file__)
 _ = Path(__file__).parent
@@ -69,12 +71,12 @@ def with_func_attrs(**attrs: Any) -> Callable:
 
 # fmt: off
 @with_func_attrs(set_languages=None)
-def fastlid(
+def fastlid(  # noqa: C901
         text: str,
         k: int = 1,
         threshold: float = 0.0,
         loglevel: int = 20,
-        method: int = None,
+        method: Optional[int] = None,
 ) -> Union[Tuple[str, float], Tuple[List[str], List[float]]]:
     # fmt: on
     r"""Detect lang via a fasttext model.
@@ -144,7 +146,8 @@ def fastlid(
             text = re.sub(r"(?<=[a-zA-Z]) (?=[a-zA-Z])", "", text.replace("", " "))  # NOQA
         else:
             # faster? method 3 in insert_spaces
-            text = re.sub(r"[一-龟]|\d+|\w+", r"\g<0> ", text)
+            # text = re.sub(r"[一-龟]|\d+|\w+", r"\g<0> ", text)
+            text = re.sub(r"[\u4e00-\u9fef]|\d+|\w+", r"\g<0> ", text)
 
         # probably better, need to check speed,
         # slow 30s to process shakespeare
@@ -233,16 +236,27 @@ def fastlid(
     lid = np.array(lid)
     prob = np.array(prob)
 
-    if k > len(fastlid.set_languages):
-        logger.warning("k (=%s) > len(fastlid.set_languages) (%s) makes no sense, k reset to 1", k, len(fastlid.set_languages))
-        k = 1
+    # qick fix, need to check later on
+    if fastlid.set_languages is not None:
+        len_l = len(fastlid.set_languages)
+        if k > len_l:
+            logger.warning("k (=%s) > len(fastlid.set_languages) (%s) makes no sense, k reset to %s", k, len_l, len_l)
+            # k = 1
+            k = len_l
 
     # no need, already sorted, just take the first k terms
     # ind = np.argpartition(prob, -1 * k)[-1 * k:]
     # prob = prob[ind]
     # lid = lid[ind]
 
+    # lid are: '__label__en', '__label__de', hence 9:
     if k > 1:
         return [*map(lambda x: x[9:], lid[:k])], [*map(lambda x: round(x, 3), prob[:k])]
 
-    return [*map(lambda x: x[9:], lid)][0], [*map(lambda x: round(x, 3), prob)][0]
+    try:
+        _ = [*map(lambda x: x[9:], lid)][0], [*map(lambda x: round(x, 3), prob)][0]
+    except Exception as exc:
+        logger.debug(" lid: %s", lid)
+        logger.error(exc)
+        raise
+    return _
