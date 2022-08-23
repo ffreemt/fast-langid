@@ -9,7 +9,8 @@ import urllib.request
 import hashlib
 import numpy as np
 import fasttext
-import logzero
+
+# import logzero
 from logzero import logger
 
 from fastlid import supported_langs
@@ -75,7 +76,7 @@ def fastlid(  # noqa: C901
         text: str,
         k: int = 1,
         threshold: float = 0.0,
-        loglevel: int = 20,
+        # loglevel: int = 20,
         method: Optional[int] = None,
 ) -> Union[Tuple[str, float], Tuple[List[str], List[float]]]:
     # fmt: on
@@ -120,6 +121,7 @@ def fastlid(  # noqa: C901
         for k=1: (label, probabilty)
         for k>1: ([label1, ..., labelk], [prob1, ..., probk]
     """
+    _ = """
     try:
         loglevel = int(loglevel)
     except Exception as e:
@@ -128,8 +130,9 @@ def fastlid(  # noqa: C901
     if loglevel < 10:
         loglevel = 10
     logzero.setup_default_logger(level=loglevel)
-
-    # logger.debug("fastlid entry")
+    # """
+    # removed, causes problem with logzero.debug
+    # in packages using fastlid
 
     try:
         text = str(text)
