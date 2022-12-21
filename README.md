@@ -20,6 +20,10 @@ For Windows without a C/C++ compiler:
 ```bash
 pip install fasttext*.whl
 ```
+or
+```
+pip install https://github.com/ffreemt/ezbee/raw/main/data/artifects/fasttext-0.9.2-cp38-cp38-win_amd64.whl
+```
 
 This step is not needed if a C/C++ compiler (e.g. Visual C) is present in the system.
 

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastlid"
-version = "0.1.8"
+version = "0.1.9"
 description = "Detect languages via a fasttext model"
 authors = ["freemt"]
 license = "MIT"
@@ -10,13 +10,13 @@ repository = "https://github.com/ffreemt/fast-langid"
 [tool.poetry.dependencies]
 python = "^3.6"
 logzero = "^1.7.0"
-fasttext = "^0.9.2"
+# fasttext = "^0.9.2"
 numpy = "^1.20.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
 flake8 = "^3.9.2"
-tbump = "^6.3.2"
+# tbump = "^6.3.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
