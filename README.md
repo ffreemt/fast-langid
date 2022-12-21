@@ -15,17 +15,19 @@ This module attempts to immitate the follow two features of `langid`
 
 ## Preinstall fasttext for Windows without C compiler
 
+```
+pip install fasttext
+```
+
 For Windows without a C/C++ compiler:
 * Download a proper whl (e.g., `fasttext‑0.9.2‑cp36‑cp36m‑win_amd64.whl` for 64bits Python 3.6 etc)  from [https://www.lfd.uci.edu/~gohlke/pythonlibs/#fasttext](https://www.lfd.uci.edu/~gohlke/pythonlibs/#fasttext)
 ```bash
 pip install fasttext*.whl
 ```
-or
+or (for python 3.8)
 ```
 pip install https://github.com/ffreemt/ezbee/raw/main/data/artifects/fasttext-0.9.2-cp38-cp38-win_amd64.whl
 ```
-
-This step is not needed if a C/C++ compiler (e.g. Visual C) is present in the system.
 
 ## Install it
 
