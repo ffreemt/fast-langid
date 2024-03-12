@@ -21,13 +21,17 @@ fasttext.FastText.eprint = lambda x: None
 # logzero.setup_default_logger(level=20)
 
 # logger.info(__file__)
-_ = Path(__file__).parent
+# _ = Path(__file__).parent
+CACHE_DIR = Path("~/.cache").expanduser()
+CACHE_DIR.mkdir(exist_ok=True)
+
 MODEL_FILE = "lid.176.bin"
 MODEL_FILE = "lid.176.ftz"
 
 # https://dl.fbaipublicfiles.com/fasttext/supervised-models/lid.176.bin
 
-MODEL_PATH = Path(_) / MODEL_FILE
+# MODEL_PATH = Path(_) / MODEL_FILE  # need to set to home dir, or else Permission denied in streamlit.io
+MODEL_PATH = CACHE_DIR / MODEL_FILE  # need to set to home dir, or else Permission denied in streamlit.io
 
 # check MODEL_PATH exist and md5 is correct
 if not MODEL_PATH.exists():

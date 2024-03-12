@@ -13,7 +13,7 @@ This module attempts to immitate the follow two features of `langid`
     *   fastlid.set_languages = ['nl','fr'])
 *   TODO: Commandline interface
 
-## Preinstall fasttext for Windows without C compiler
+## Preinstall fasttext
 
 ```
 pip install fasttext
