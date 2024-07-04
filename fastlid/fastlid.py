@@ -30,7 +30,7 @@ MODEL_FILE = "lid.176.ftz"
 
 # https://dl.fbaipublicfiles.com/fasttext/supervised-models/lid.176.bin
 
-# MODEL_PATH = Path(_) / MODEL_FILE  # need to set to home dir, or else Permission denied in streamlit.io
+# MODEL_PATH = Path(_) / MODEL_FILE
 MODEL_PATH = CACHE_DIR / MODEL_FILE  # need to set to home dir, or else Permission denied in streamlit.io
 
 # check MODEL_PATH exist and md5 is correct
@@ -79,7 +79,7 @@ def with_func_attrs(**attrs: Any) -> Callable:
 def fastlid(  # noqa: C901
         text: str,
         k: int = 1,
-        threshold: float = 0.0,
+        threshold: float = -1e6,
         # loglevel: int = 20,
         method: Optional[int] = None,
 ) -> Union[Tuple[str, float], Tuple[List[str], List[float]]]:
@@ -119,7 +119,8 @@ def fastlid(  # noqa: C901
                 threshold on probability
                 fasttext.load_model().predict(..., threshold=0.0)
         method: regarding how to insert spaces
-                None: default, using re.sub(r"(?<=[a-zA-Z]) (?=[a-zA-Z])", "", text.replace("", " "))
+                None: do nothing (default)
+                1: using re.sub(r"(?<=[a-zA-Z]) (?=[a-zA-Z])", "", text.replace("", " "))
                 else: using re.sub(r"[一-龟]|\d+|\w+", r"\g<0> ", text)
     Returns:
         for k=1: (label, probabilty)
@@ -149,7 +150,9 @@ def fastlid(  # noqa: C901
 
         # ispace = lambda text: re.sub(r"(?<=[a-zA-Z\d]) (?=[a-zA-Z\d])", "", text.replace("", " ")).strip()
 
-        if method is None:
+        if not method:  # None or '' empty:
+            ...  # do nothing
+        elif method in [1, '1']:
             text = re.sub(r"(?<=[a-zA-Z]) (?=[a-zA-Z])", "", text.replace("", " "))  # NOQA
         else:
             # faster? method 3 in insert_spaces
@@ -261,6 +264,7 @@ def fastlid(  # noqa: C901
         return [*map(lambda x: x[9:], lid[:k])], [*map(lambda x: round(x, 3), prob[:k])]
 
     try:
+        # Done: text = 'Elle', ['en', 'zh']
         _ = [*map(lambda x: x[9:], lid)][0], [*map(lambda x: round(x, 3), prob)][0]
     except Exception as exc:
         logger.debug(" lid: %s", lid)

@@ -15,14 +15,15 @@ This module attempts to immitate the follow two features of `langid`
 
 ## Preinstall fasttext
 
+For Linux and friends (Mac for exmaple)
 ```
 pip install fasttext
 ```
 
-For Windows without a C/C++ compiler:
-* Download a proper whl (e.g., `fasttext‑0.9.2‑cp36‑cp36m‑win_amd64.whl` for 64bits Python 3.6 etc)  from [https://www.lfd.uci.edu/~gohlke/pythonlibs/#fasttext](https://www.lfd.uci.edu/~gohlke/pythonlibs/#fasttext)
+For Windows:
+
 ```bash
-pip install fasttext*.whl
+pip install fasttext-wheel
 ```
 or (for python 3.8)
 ```
