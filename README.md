@@ -1,6 +1,6 @@
 # fastlid
 <!--- repo_name  pack_name  mod_name func_name --->
-[![tests](https://github.com/ffreemt/fast-langid/actions/workflows/routine-tests.yml/badge.svg)][![python](https://img.shields.io/static/v1?label=python+&message=3.7%2B&color=blue)](https://img.shields.io/static/v1?label=python+&message=3.7%2B&color=blue)[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)[![PyPI version](https://badge.fury.io/py/fastlid.svg)](https://badge.fury.io/py/fastlid)
+[![tests](https://github.com/ffreemt/fast-langid/actions/workflows/routine-tests.yml/badge.svg)][![python](https://img.shields.io/static/v1?label=python+&message=3.8%2B&color=blue)](https://img.shields.io/static/v1?label=python+&message=3.8%2B&color=blue)[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)[![PyPI version](https://badge.fury.io/py/fastlid.svg)](https://badge.fury.io/py/fastlid)
 
 Language identification based on fasttext (lid.176.ftz https://fasttext.cc/docs/en/language-identification.html).
 
@@ -12,23 +12,6 @@ This module attempts to immitate the follow two features of `langid`
     *   import fastlid
     *   fastlid.set_languages = ['nl','fr'])
 *   TODO: Commandline interface
-
-## Preinstall fasttext
-
-For Linux and friends (Mac for exmaple)
-```
-pip install fasttext
-```
-
-For Windows:
-
-```bash
-pip install fasttext-wheel
-```
-or (for python 3.8)
-```
-pip install https://github.com/ffreemt/ezbee/raw/main/data/artifects/fasttext-0.9.2-cp38-cp38-win_amd64.whl
-```
 
 ## Install it
 
