@@ -1,10 +1,10 @@
 # fastlid
 <!--- repo_name  pack_name  mod_name func_name --->
-[![tests](https://github.com/ffreemt/fast-langid/actions/workflows/routine-tests.yml/badge.svg)][![python](https://img.shields.io/static/v1?label=python+&message=3.8-3.9&color=blue)](https://img.shields.io/static/v1?label=python+&message=3.8%2B&color=blue)[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)[![PyPI version](https://badge.fury.io/py/fastlid.svg)](https://badge.fury.io/py/fastlid)
+[![tests](https://github.com/ffreemt/fast-langid/actions/workflows/routine-tests.yml/badge.svg)][![python](https://img.shields.io/static/v1?label=python+&message=3.8%2B&color=blue)](https://img.shields.io/static/v1?label=python+&message=3.8%2B&color=blue)[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)[![PyPI version](https://badge.fury.io/py/fastlid.svg)](https://badge.fury.io/py/fastlid)
 
 Language identification based on fasttext (lid.176.ftz https://fasttext.cc/docs/en/language-identification.html).
 
-Python3.8, 3.9 only -- there seem to be some problems with python 3.10+.
+Python3.8, 3.9 only -- there seem to be some problems with python
 
 The `lid.176.ftz` file is licensed under  Creative Commons Attribution-Share-Alike License 3.0 and is not part of this module. It is automatically downloaded from its external origin on the first run of this module.
 
