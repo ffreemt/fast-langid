@@ -23,7 +23,7 @@ jobs:
       - name: Install packages
         run: |
           poetry install  # --no-dev
-          # poetry run pip install fasttext-wheel
+          poetry run pip install fasttext-wheel
       - name: Run flake8
         run: |
           poetry run flake8 --exit-zero
